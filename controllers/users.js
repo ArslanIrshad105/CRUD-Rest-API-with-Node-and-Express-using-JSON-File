@@ -22,7 +22,54 @@ const getUsers = (req, resp) => {
   });
 };
 
+//Function to Add a user in JSON file
+const adduser = (req, resp) => {
+  const newUser = req.body;
+
+  // Step 1: Read existing users
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      return resp.status(500).json({ error: "Failed to read users file" });
+    }
+
+    let users = [];
+    if (data) {
+      try {
+        const parsedData = JSON.parse(data);
+        if (Array.isArray(parsedData)) {
+          users = parsedData;
+        } else {
+          console.warn(
+            "Parsed data is not an array. Initializing as an empty array."
+          );
+        }
+      } catch (parseError) {
+        console.error("Error parsing JSON:", parseError);
+        return resp.status(500).json({ error: "Failed to parse users file" });
+      }
+    }
+
+    // Step 2: Append new user to list
+    const d = users[0];
+    const keys = Object.keys(d);
+    const length = keys[keys.length - 1];
+    d[parseInt(length) + 1] = newUser;
+
+    // Step 3: Write the updated data back to the file
+    fs.writeFile(filePath, JSON.stringify(users, null, 2), (writeError) => {
+      if (writeError) {
+        console.error("Error writing file:", writeError);
+        return resp.status(500).json({ error: "Failed to write users file" });
+      }
+
+      resp.send({ data: users });
+    });
+  });
+};
+
 module.exports = {
   usersHome,
   getUsers,
+  adduser,
 };
