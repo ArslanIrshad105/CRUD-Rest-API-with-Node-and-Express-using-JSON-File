@@ -10,7 +10,8 @@ This project involves the creation of a CRUD (Create, Read, Update, Delete) REST
 **Delete:** Remove data entries from the JSON file.
 
 **Endpoints:**
-GET /users/getUsers : Retrieve all items.
+GET /users/getusers : Retrieve all items.
+POST /users/adduser : Add user in the json file
 
 **Technologies Used:**
 **Node.js:** JavaScript runtime for server-side programming.

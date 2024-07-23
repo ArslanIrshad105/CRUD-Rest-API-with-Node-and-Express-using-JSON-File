@@ -8,4 +8,7 @@ router.get("/", usersController.usersHome);
 //Endpoint to Get a list of users
 router.get("/getUsers", usersController.getUsers);
 
+//Endpoint to Add a user
+router.post("/adduser", usersController.adduser);
+
 module.exports = router;
