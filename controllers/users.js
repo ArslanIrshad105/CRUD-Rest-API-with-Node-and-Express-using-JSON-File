@@ -68,8 +68,44 @@ const adduser = (req, resp) => {
   });
 };
 
+//FUnction to Search user by key
+const searchUser = (req, resp) => {
+  const { key } = req.params;
+
+  // Step 1: Read existing users
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      return resp.status(500).json({ error: "Failed to read users file" });
+    }
+
+    let users = [];
+    if (data) {
+      try {
+        const parsedData = JSON.parse(data);
+        if (Array.isArray(parsedData)) {
+          users = parsedData;
+        } else {
+          console.warn(
+            "Parsed data is not an array. Initializing as an empty array."
+          );
+        }
+      } catch (parseError) {
+        console.error("Error parsing JSON:", parseError);
+        return resp.status(500).json({ error: "Failed to parse users file" });
+      }
+    }
+    // Step 2:
+    const datas = users[0];
+    const result = datas[key];
+    if (result) return resp.send(result);
+    return resp.send("No record found");
+  });
+};
+
 module.exports = {
   usersHome,
   getUsers,
   adduser,
+  searchUser,
 };

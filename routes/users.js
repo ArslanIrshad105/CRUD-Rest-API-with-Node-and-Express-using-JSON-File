@@ -11,4 +11,7 @@ router.get("/getUsers", usersController.getUsers);
 //Endpoint to Add a user
 router.post("/adduser", usersController.adduser);
 
+//Endpoint to Search user by key
+router.get("/search/:key", usersController.searchUser);
+
 module.exports = router;
