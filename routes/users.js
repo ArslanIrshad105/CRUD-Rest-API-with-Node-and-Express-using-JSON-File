@@ -17,4 +17,7 @@ router.get("/search/:key", usersController.searchUser);
 //Endpoint to get usersemail
 router.get("/getusersemail", usersController.getusersemail);
 
+//Endpoint to delete user
+router.delete("/deleteuser/:key", usersController.deleteUser);
+
 module.exports = router;
