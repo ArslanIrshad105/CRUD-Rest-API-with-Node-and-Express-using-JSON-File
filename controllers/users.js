@@ -103,9 +103,44 @@ const searchUser = (req, resp) => {
   });
 };
 
+//Function to get all user's email
+const getusersemail = (req, resp) => {
+  // Step 1: Read existing users
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      return resp.status(500).json({ error: "Failed to read users file" });
+    }
+
+    let users = [];
+    if (data) {
+      try {
+        const parsedData = JSON.parse(data);
+        if (Array.isArray(parsedData)) {
+          users = parsedData;
+        } else {
+          console.warn(
+            "Parsed data is not an array. Initializing as an empty array."
+          );
+        }
+      } catch (parseError) {
+        console.error("Error parsing JSON:", parseError);
+        return resp.status(500).json({ error: "Failed to parse users file" });
+      }
+    }
+    // Step 2:
+    const datas = users[0];
+
+    const usersemail = Object.values(datas).map((item) => item.email);
+
+    resp.send({ message: "User Emails", data: usersemail });
+  });
+};
+
 module.exports = {
   usersHome,
   getUsers,
   adduser,
   searchUser,
+  getusersemail,
 };
