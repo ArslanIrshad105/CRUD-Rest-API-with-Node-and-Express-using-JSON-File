@@ -14,13 +14,16 @@ This project involves the creation of a CRUD (Create, Read, Update, Delete) REST
 **Delete:** Remove data entries from the JSON file.
 
 **Endpoints:**
-GET /users/getusers : Retrieve all items.
 
-POST /users/adduser : Add user in the json file
+GET: "/users/getusers" Retrieve all items.
 
-GET /users/search/:key : Search the user by key
+POST: "/users/adduser" Add user in the json file
 
-GET /users/getusersemail : Retrive all the users emails
+GET: "/users/search/:key" Search the user by key
+
+GET: "/users/getusersemail" Retrive all the users emails
+
+DELETE: "/users/deleteuser/:key" Remove users from the JSON file.
 
 **Technologies Used:**
 
